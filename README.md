@@ -13,7 +13,10 @@ pip install opencv-python
 pip install opencv-contrib-python
 pip install face_recognition
 pip install flask
+pip install django=2.0.2
 ```
+
+django =  3.0 일경우 {% load static %} 수정하기
 
 
 
