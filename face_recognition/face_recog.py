@@ -62,6 +62,7 @@ class FaceRecog():
                 # tolerance: How much distance between faces to consider it a match. Lower is more strict.
                 # 0.6 is typical best performance.
                 name = "Unknown"
+                print(min_value)
                 if min_value < 0.6:
                     index = np.argmin(distances)
                     name = self.known_face_names[index]
@@ -100,6 +101,7 @@ class FaceRecog():
 if __name__ == '__main__':
     face_recog = FaceRecog()
     print(face_recog.known_face_names)
+    print("실행")
     while True:
         frame = face_recog.get_frame()
 

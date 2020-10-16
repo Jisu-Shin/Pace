@@ -1,18 +1,12 @@
-{% extends "home/index.html" %}
-{% load staticfiles %}
 
-{% block title %}popup {% endblock %}
+{% load static %}
 
-
-
-{% block javascript %}
-<script type="text/javascript" src="{% static 'home/js/urforpop.js' %}"></script>
-{% if initMessages %}
-<script type="text/javascript">
-    botName = "starfield chatbot"
-    {% for message in initMessages %}
-    processResponse("{{ message }}")
-    {% endfor %}
-</script>
-{% endif %}
-{% endblock javascript %}
+<html>
+  <head>
+    <title>Video Streaming Demonstration</title>
+  </head>
+  <body>
+    <h1>Video Streaming Demonstration</h1>
+    <img id="bg" src="{% url 'call_cam' %}">
+  </body>
+</html>

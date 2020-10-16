@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http.response import StreamingHttpResponse
 from django.http import Http404, HttpResponseNotFound
 from django.template import loader
 
@@ -34,14 +35,22 @@ def popup_chat_home(request):
     }
     return HttpResponse(template.render(context, request))
 
-def call_chatbot(request):
-    if request.method == 'POST':
-        if request.is_ajax():
-            userID = request.POST['user']
-            sentence = request.POST['message']
-            logger.debug("question[{}]".format(sentence))
-            answer = bot.get_answer(sentence, userID)
-            # answer = sentence
-            logger.debug("answer[{}]".format(answer))
-            return HttpResponse(answer)
-    return ''
+def call_pop(request):
+
+    template = loader.get_template('home/popup.html')
+    context = {
+#         'login_success' : False,
+#         'latest_question_list': "test",
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def gen(fr):
+    while True:
+        jpg_bytes = fr.get_jpg_bytes()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + jpg_bytes + b'\r\n\r\n')
+
+
+def call_cam(request):
+    return StreamingHttpResponse(gen(face),content_type='multipart/x-mixed-replace; boundary=frame')

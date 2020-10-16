@@ -43,7 +43,8 @@ class FaceRecog():
         self.process_this_frame = True
 
     def __del__(self):
-        self.video.release()
+        cv2.destroyAllWindows()
+        #self.video.release()
 
     def get_frame(self):
         # Grab a single frame of video
@@ -105,7 +106,6 @@ class FaceRecog():
         # video stream.
         ret, jpg = cv2.imencode('.jpg', frame)
         return jpg.tobytes()
-
 
 if __name__ == '__main__':
     cam = FaceRecog()
