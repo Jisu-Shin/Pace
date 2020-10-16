@@ -12,6 +12,12 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip(); 
 });
 
+$("#myclick").click(function() {
+	$.get("/output/", function(data) {
+		$("#myOutput").html(data);
+	}, "html");
+});
+
 $(function(){
 	$('#frmChat').submit(function(e){
 	// this function overrides the form's submit() method, allowing us to use AJAX calls to communicate with the ChatScript server
