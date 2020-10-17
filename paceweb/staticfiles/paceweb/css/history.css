@@ -1,0 +1,30 @@
+.container {
+    position: relative;
+}
+
+.alert {
+    position: absolute;
+    border-radius: 5px;
+    background-color: #3b62d9;
+    color: aliceblue;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .alert {
+        width: 60%;
+    }
+}
+
+@media screen and (min-width: 601px) {
+    .container {
+    }
+    .alert {
+        width: 500px;
+        height: 100px;
+        font-size: 28px;
+        text-align: center;
+        text-justify: center;
+    }
+}
+  

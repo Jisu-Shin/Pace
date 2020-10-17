@@ -1,0 +1,60 @@
+.container {
+    display: inline;
+}
+
+.pointContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.point_table {
+    border-top: 1px solid  rgb(21, 105, 138);
+}
+
+.point_table th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    text-align: start;
+    border-bottom: 1px solid rgb(21, 105, 138);
+    background: rgb(206, 231, 252);
+}
+
+.point_table td {
+    display: inline-flex;
+    justify-content: flex-end;
+    width: 350px;
+    padding: 10px;
+    border-bottom: 1px solid rgb(21, 105, 138);
+    background: white;
+}
+
+.btnBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+button {
+    width: 400px;
+    font-size: 28px;
+    height: 70px;
+    background-color: #3b62d9;
+    color: aliceblue;
+    border: none;
+    border-radius: 5px;
+    margin: 20px;
+}
+
+
+@media screen and (max-width: 600px) {
+
+}
+
+@media screen and (min-width: 601px) {
+    
+}
+  

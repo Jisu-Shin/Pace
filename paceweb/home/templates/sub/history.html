@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="{% static 'paceweb/css/history.css' %}" rel="stylesheet">
+        <script src="{% static 'paceweb/js/history.js' %}"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="pointContainer">
+            <H1>PACE</H1>
+                <table class="point_table">
+                    <tbody>
+                    <tr class="add">
+                        <th>적립 포인트</th>
+                        <td>
+                            <p class="use_point" id="add_point">0</p>
+                            <p class="text">원</p>
+                        </td>
+                    </tr>
+                    <tr class="use">
+                        <th>사용 포인트</th>
+                        <td>
+                            <input class="point" id="use_point" type="text" value="0">
+                            <p class="text">원</p>
+                        </td>
+                    </tr>
+                    <tr class="total">
+                        <th>누적 포인트</th>
+                        <td>
+                            <p class="point" id="total_point">0</p>
+                            <p class="text">원</p>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+                <div class="btnBox">
+                    <button id="useBtn" onclick="">
+                        사용하기
+                    </button>
+                    <button id="addBtn">
+                        적립하기
+                    </button>
+                </div>
+        </div>
+        </div>
+    </body>
+</html>

@@ -14,3 +14,6 @@ def index(request):
 #         'latest_question_list': "test",
     }
     return HttpResponse(template.render(context, request))
+
+def history(request):
+    return render(request, 'sub/history.html')
