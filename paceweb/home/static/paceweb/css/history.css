@@ -31,6 +31,11 @@
     background: white;
 }
 
+.input_point {
+    text-align: end;
+    font-size: large;
+}
+
 .btnBox {
     display: flex;
     flex-direction: row;
