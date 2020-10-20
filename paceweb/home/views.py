@@ -16,4 +16,9 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def history(request):
-    return render(request, 'sub/history.html')
+    template = loader.get_template('sub/history.html')
+    context = {
+#         'login_success' : False,
+#         'latest_question_list': "test",
+    }
+    return HttpResponse(template.render(context, request))
