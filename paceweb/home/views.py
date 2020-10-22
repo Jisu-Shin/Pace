@@ -8,7 +8,15 @@ def error(request):
     raise Http404("Not Found")
 
 def index(request):
-    template = loader.get_template('home/index.html')
+    template = loader.get_template('main/index.html')
+    context = {
+#         'login_success' : False,
+#         'latest_question_list': "test",
+    }
+    return HttpResponse(template.render(context, request))
+
+def history(request):
+    template = loader.get_template('sub/history.html')
     context = {
 #         'login_success' : False,
 #         'latest_question_list': "test",

@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PACE</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'paceweb/css/main.css' %}">
+<body>
+  <div class="container">
+    <div class="btnBox">
+      <button class="camera"
+              id="cameraBtn">
+        포인트 적립
+      </button>
+      <button class="history" 
+              id="historyBtn">
+        포인트 적립 내역
+      </button>
+    </div>
+    <footer class="footer">
+      by. 신지수 김지원 김련경
+    </footer>
+  </div>
+
+  <script type="text/javascript" src="{% static 'paceweb/js/index.js' %}"></script>
+</body>
+</html>
