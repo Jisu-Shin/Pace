@@ -7,33 +7,85 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
+    height: 100%;
+    background-color: rgba(231, 231, 240, 0.719);
+}
+
+h1 {
+    font-size: 80px;
+}
+
+.pointBox {
+    padding: 5px 50px 40px;
+    background-color: rgba(47, 81, 168, 0.39);
+    border-radius: 5px;
 }
 
 .point_table {
-    border-top: 1px solid  rgb(21, 105, 138);
+    border-top: 1px solid  rgb(76, 123, 252);
+}
+
+.point_table caption {
+    text-align: right;
+}
+
+.point_table caption p {
+    display: inline-block;
+}
+
+.user_phoneNumber {
+    font-size: 40px;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.user_text {
+    font-size: 27px;
+}
+
+.point_table tr {
+    height: 70px;
 }
 
 .point_table th {
     width: 150px;
     padding: 10px;
-    font-weight: bold;
+    font-size: 25px;
+    font-weight: 600;
     text-align: start;
-    border-bottom: 1px solid rgb(21, 105, 138);
-    background: rgb(206, 231, 252);
+    background:rgba(0, 105, 217, 0.411);
 }
 
 .point_table td {
-    display: inline-flex;
-    justify-content: flex-end;
+    text-align: right;
     width: 350px;
     padding: 10px;
-    border-bottom: 1px solid rgb(21, 105, 138);
     background: white;
 }
 
+.point_table tbody p {
+    display: inline-block;
+    margin: 15px 0px;
+}
+
+.text {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.point {
+    font-size: 35px;
+    font-weight: 650;
+}
+
 .input_point {
-    text-align: end;
-    font-size: large;
+    width: 300px;
+    height: 70px;
+    margin: 0px;
+    font-size: 35px;
+    font-weight: 650;
+    text-align: end; 
+    border-radius: 5px;
 }
 
 .btnBox {
@@ -47,7 +99,7 @@ button {
     width: 400px;
     font-size: 28px;
     height: 70px;
-    background-color: #3b62d9;
+    background-color: rgb(0, 105, 217);
     color: aliceblue;
     border: none;
     border-radius: 5px;

@@ -9,6 +9,18 @@
     align-items: center;
 }
 
+.pointBox {
+    padding: 50px;
+    background-color: gray;
+    border-radius: 5px;
+}
+
+.user_info p {
+    display: inline-block;
+    width: 50px;
+    background-color: darkcyan;
+}
+
 .point_table {
     border-top: 1px solid  rgb(21, 105, 138);
 }
@@ -16,6 +28,7 @@
 .point_table th {
     width: 150px;
     padding: 10px;
+    font-size: 20px;
     font-weight: bold;
     text-align: start;
     border-bottom: 1px solid rgb(21, 105, 138);
@@ -31,9 +44,17 @@
     background: white;
 }
 
+.text {
+    font-size: 25px;
+}
+
+.point {
+    font-size: 25px;
+}
+
 .input_point {
-    outline: none;
     text-align: end;
+    font-size: 25px;
 }
 
 .btnBox {
