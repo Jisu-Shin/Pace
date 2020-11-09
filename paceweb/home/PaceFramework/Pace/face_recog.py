@@ -2,7 +2,7 @@
 
 import face_recognition
 import cv2
-import camera
+#주석 import camera
 import os
 import numpy as np
 
@@ -11,14 +11,22 @@ class FaceRecog():
         # Using OpenCV to capture from device 0. If you have trouble capturing
         # from a webcam, comment the line below out and use a video file
         # instead.
-        self.camera = camera.VideoCamera()
+        
+        #주석 self.camera = camera.VideoCamera()
+        self.video = cv2.VideoCapture(0)
 
         self.known_face_encodings = []
         self.known_face_names = []
 
         # Load sample pictures and learn how to recognize it.
         dirname = 'knowns'
+
+        # 이 파일만 실행시킬경우 26번줄 주석 필요
+        # django로 실행할 경우 오류가 나기때문에 필요하다
+        os.chdir(".\home\PaceFramework\Pace")
+
         files = os.listdir(dirname)
+
         for filename in files:
             name, ext = os.path.splitext(filename)
             if ext == '.jpg':
@@ -35,11 +43,14 @@ class FaceRecog():
         self.process_this_frame = True
 
     def __del__(self):
-        del self.camera
+        cv2.destroyAllWindows()
+        #self.video.release()
 
     def get_frame(self):
         # Grab a single frame of video
-        frame = self.camera.get_frame()
+        # 주석 frame = self.camera.get_frame()
+
+        ret, frame = self.video.read()
 
         # Resize frame of video to 1/4 size for faster face recognition processing
         small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
@@ -62,7 +73,6 @@ class FaceRecog():
                 # tolerance: How much distance between faces to consider it a match. Lower is more strict.
                 # 0.6 is typical best performance.
                 name = "Unknown"
-                print(min_value)
                 if min_value < 0.6:
                     index = np.argmin(distances)
                     name = self.known_face_names[index]
@@ -97,13 +107,11 @@ class FaceRecog():
         ret, jpg = cv2.imencode('.jpg', frame)
         return jpg.tobytes()
 
-
 if __name__ == '__main__':
-    face_recog = FaceRecog()
-    print(face_recog.known_face_names)
-    print("실행")
+    cam = FaceRecog()
+    print(cam.known_face_names)
     while True:
-        frame = face_recog.get_frame()
+        frame = cam.get_frame()
 
         # show the frame
         cv2.imshow("Frame", frame)

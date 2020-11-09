@@ -12,7 +12,8 @@ pip install dlib-19.8.1-cp36-cp36m-win_amd64.whl
 pip install opencv-python
 pip install opencv-contrib-python
 pip install face_recognition
-pip install flask
+pip install flask #솔직히 안해도 될듯...
+pip install django=3.0.5
 ```
 
 
