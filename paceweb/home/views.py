@@ -18,7 +18,7 @@ def error(request):
     raise Http404("Not Found")
 
 def index(request):
-    template = loader.get_template('main/index.html')
+    template = loader.get_template('home/index.html')
     context = {
 #         'login_success' : False,
 #         'latest_question_list': "test",
@@ -45,7 +45,7 @@ def popup_chat_home(request):
 
 def call_pop(request):
 
-    template = loader.get_template('home/popup.html')
+    template = loader.get_template('sub/popup.html')
     context = {
 #         'login_success' : False,
 #         'latest_question_list': "test",

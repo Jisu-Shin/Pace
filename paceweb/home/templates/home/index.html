@@ -2,65 +2,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>paceweb</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static 'paceweb/css/main.css' %}" rel="stylesheet">
-</head>
+  <title>PACE</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'paceweb/css/home.css' %}">
 <body>
-
-<div class="header">
-  <h1>pace</h1>
-</div>
-
-<div class="topnav">
-  <a href="{% url 'call_pop' %}" class="myclick">
-    얼굴인식 버튼
-  </a>
-  <a href="#">Link</a>
-  <a href="#">Link</a>
-  <a href="#" style="float:right">Link</a>
-</div>
-
-<div class="row">
-  <div class="leftcolumn">
-    <div class="card">
-      <h2>TITLE HEADING</h2>
-      <h5>Title description, Dec 7, 2017</h5>
-      <div class="fakeimg" style="height:200px;"><img src="{% static 'paceweb/images/백화점사진.jpg' %}" alt="백화점사진"></div>
-      <p>Some text..</p>
-      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+  <div class="container">
+    <div class="btnBox">
+      <button class="camera"
+              id="cameraBtn">
+        포인트 적립
+      </button>
+      <button class="history" 
+              id="historyBtn">
+        포인트 적립 내역
+      </button>
     </div>
-    <div class="card">
-      <h2>TITLE HEADING</h2>
-      <h5>Title description, Sep 2, 2017</h5>
-      <div class="fakeimg" style="height:200px;">Image</div>
-      <p>Some text..</p>
-      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-    </div>
+    <footer class="footer">
+      <p>
+        Point By Face</br>
+        by. 김련경 신지수 김지원
+      </p>
+    </footer>
   </div>
-  <div class="rightcolumn">
-    <div class="card">
-      <h2>About Me</h2>
-      <div class="fakeimg" style="height:100px;">Image</div>
-      <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-    </div>
-    <div class="card">
-      <h3>Popular Post</h3>
-      <div class="fakeimg"><p>Image</p></div>
-      <div class="fakeimg"><p>Image</p></div>
-      <div class="fakeimg"><p>Image</p></div>
-    </div>
-    <div class="card">
-      <h3>Follow Me</h3>
-      <p>Some text..</p>
-    </div>
-  </div>
-</div>
 
-<div class="footer">
-  <h2>Footer</h2>
-</div>
-
+  <script type="text/javascript" src="{% static 'paceweb/js/index.js' %}"></script>
 </body>
-</html>
+</html> 
