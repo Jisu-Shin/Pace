@@ -26,7 +26,7 @@ class FaceRecog():
         # 이 파일만 실행시킬경우 26번줄 주석 필요
         # django로 실행할 경우 오류가 나기때문에 필요하다
         print(os.getcwd())
-        os.chdir("C:\\Users\\sjszz\\Documents\\1팀플linc\\Pace\\paceweb\\home")
+        os.chdir("C:\\Users\\luvli\\OneDrive\\Documents\\Pace\\paceweb\\home")
 
         files = os.listdir(dirname)
 

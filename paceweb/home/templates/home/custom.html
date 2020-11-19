@@ -38,10 +38,11 @@
 
     document.querySelector("#btn").addEventListener("click", (e) => {
         chatSocket.send(JSON.stringify({
-            'message': "alram - > shareme",
+            'message': "complete",
             'change':' ' 
             
         }));
+        location.href = '/Custom/Chistory';
     });
 </script>
 </html>

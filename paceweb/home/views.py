@@ -1,8 +1,9 @@
 from django.views.generic import TemplateView
 from . import models
 import json
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render,redirect
+from django.http import HttpResponse,HttpResponseRedirect
+from django.urls import reverse
 from django.http.response import StreamingHttpResponse
 from django.template import loader
 from PIL import Image
@@ -19,8 +20,6 @@ import logging
 
 global face
  
-
-
 def index(request):
     template = loader.get_template('home/index.html')
     context = {
@@ -28,16 +27,6 @@ def index(request):
 #         'latest_question_list': "test",
     }
     return HttpResponse(template.render(context, request))
-
-def history(request):
-    user_point = UserInfo.objects.get(user_id='jisu1105')
-    template = loader.get_template('sub/history.html')
-    context = {
-        "user_point": user_point
-#         'login_success' : False,
-#         'latest_question_list': "test",
-    }
-    return HttpResponse(template.render(context, request))  
 
 # 새로운 페이지 생기면 home>urls.py 수정해야함
 def popup_chat_home(request):
@@ -114,3 +103,24 @@ class Store(TemplateView):
         ins.save()
 
         return HttpResponse('')
+
+def Shistory(request):
+    user_point = UserInfo.objects.get(user_id='jisu')
+    template = loader.get_template('sub/Shistory.html')
+    context = {
+        "user_point": user_point
+#         'login_success' : False,
+#         'latest_question_list': "test",
+    }
+    return HttpResponse(template.render(context, request))  
+
+def Chistory(request):
+    user_point = UserInfo.objects.get(user_id='jisu')
+    template = loader.get_template('sub/Chistory.html')
+    context = {
+        "user_point": user_point
+#         'login_success' : False,
+#         'latest_question_list': "test",
+    }
+    return HttpResponse(template.render(context, request))
+

@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'paceweb/css/history.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="pointContainer">
+            <H1>PACE</H1>
+            <div class="pointBox">
+                <table class="point_table">
+                    <caption>
+                        <p class="user_phoneNumber">010-1234-4321</p>
+                        <p class="user_text">님</p>
+                    </caption>
+                    <tbody>
+                    <tr class="add">
+                        <th>적립 포인트</th>
+                        <td>
+                            <p class="point" id="add_point">1000</p>
+                            <p class="text">원</p>
+                        </td>
+                    </tr>
+                    <tr class="use">
+                        <th>사용 포인트</th>
+                        <td>
+                            <p class="point" id="use_point">0</p>
+                            <p class="text">원</p>
+                        </td>
+                    </tr>
+                    <tr class="total">
+                        <th>누적 포인트</th>
+                        <td>
+                            <p class="point" id="total_point">{{user_point.user_point}}</p>
+                            <p class="text">원</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+    </script>
+</body>
+</html>
