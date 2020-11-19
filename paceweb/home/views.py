@@ -111,7 +111,7 @@ def Shistory(request):
     return HttpResponse(template.render(context, request))  
 
 def Chistory(request):
-    print(customer_name)
+    print(customer_name    print(customer_name))
     user = UserInfo.objects.get(user_id=customer_name)
     template = loader.get_template('sub/Chistory.html')
     context = {
@@ -120,4 +120,3 @@ def Chistory(request):
 #         'latest_question_list': "test",
     }
     return HttpResponse(template.render(context, request))
-
