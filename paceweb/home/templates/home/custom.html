@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <title>Custom</title>
+    
 </head>
 <body>
     <textarea id="chat-log" cols="100" rows="20"></textarea><br/>
@@ -11,6 +12,8 @@
     <img id="bg" src="{% url 'open_img' %}">
     <br>
 </body>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
 <script>
     username='{{ username }}'
     
@@ -23,8 +26,14 @@
         var data = JSON.parse(e.data);
         var message = data['message'];
         var change = data['change'];
+        var endpoint = $("#bg").attr("src");
         document.querySelector('#chat-log').value += (message + '\n');
-        document.querySelector('#bg').src = change;
+        $.ajax({
+            url: endpoint,
+            success: function(data){
+                document.querySelector('#bg').src=change;
+            },
+        })
     };
 
     chatSocket.onopen=function (e) {
@@ -36,10 +45,10 @@
     };
 
 
-    document.querySelector("#btn").addEventListener("click", (e) => {
+    document.querySelector("#btn").addEventListener("click", (e2) => {
         chatSocket.send(JSON.stringify({
             'message': "alram - > shareme",
-            'change':' ' 
+            'change':'open_img' 
             
         }));
     });

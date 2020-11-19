@@ -19,7 +19,7 @@ import logging
 
 global face
  
-
+customer_name=""
 
 def index(request):
     template = loader.get_template('home/index.html')
@@ -30,7 +30,8 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def history(request):
-    user_point = UserInfo.objects.get(user_id='jisu1105')
+    print(customer_name)
+    user_point = UserInfo.objects.get(user_id=customer_name)
     template = loader.get_template('sub/history.html')
     context = {
         "user_point": user_point
@@ -39,15 +40,7 @@ def history(request):
     }
     return HttpResponse(template.render(context, request))  
 
-# 새로운 페이지 생기면 home>urls.py 수정해야함
-def popup_chat_home(request):
-    template = loader.get_template('home/new_page.html')
-    context = {
-        'login_success' : False,
-        'initMessages' : ["스타필드 코엑스점 채팅 홈페이지에 오신것을 환영합니다",
-                          "스타필드 코엑스점 챗봇이 제품, 서비스, 주요기술, 연락처에 대해 답변합니다."]
-    }
-    return HttpResponse(template.render(context, request))
+
 
 def call_pop(request):
 
@@ -64,7 +57,10 @@ def gen(fr):
         jpg_bytes = fr.get_jpg_bytes()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + jpg_bytes + b'\r\n\r\n')
-    print(fr.get_name())
+               
+    global customer_name 
+    customer_name= fr.get_name()[0]
+    print(customer_name)
 
 def call_cam(request):
     face=FaceRecog()
@@ -75,7 +71,6 @@ def open_img(request):
     response = HttpResponse(content_type="image/jpeg")
     red.save(response, "JPEG")
     return response
-
 
 
 class Custom(TemplateView):
