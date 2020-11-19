@@ -6,3 +6,7 @@ class Custom(models.Model):
 class Store(models.Model):
     message=models.CharField(max_length=100)
 
+# Create your models here.
+class UserInfo(models.Model):
+    user_id = models.CharField(max_length=200)
+    user_point = models.IntegerField(default=0)

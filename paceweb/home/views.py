@@ -7,9 +7,12 @@ from django.http.response import StreamingHttpResponse
 from django.template import loader
 from PIL import Image
 
+from .models import UserInfo
+
 # 얼굴인식 연결
 from home.face_recog import FaceRecog
 import os
+import numpy
 
 # 지워도 되나
 import logging
@@ -27,12 +30,14 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def history(request):
+    user_point = UserInfo.objects.get(user_id='jisu1105')
     template = loader.get_template('sub/history.html')
     context = {
+        "user_point": user_point
 #         'login_success' : False,
 #         'latest_question_list': "test",
     }
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render(context, request))  
 
 # 새로운 페이지 생기면 home>urls.py 수정해야함
 def popup_chat_home(request):

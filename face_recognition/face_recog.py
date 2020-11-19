@@ -7,6 +7,7 @@ import os
 import numpy as np
 
 class FaceRecog():
+
     def __init__(self):
         # Using OpenCV to capture from device 0. If you have trouble capturing
         # from a webcam, comment the line below out and use a video file
@@ -27,6 +28,7 @@ class FaceRecog():
                 img = face_recognition.load_image_file(pathname)
                 face_encoding = face_recognition.face_encodings(img)[0]
                 self.known_face_encodings.append(face_encoding)
+
 
         # Initialize some variables
         self.face_locations = []
@@ -89,14 +91,20 @@ class FaceRecog():
 
         return frame
 
+    def get_name(self):
+        return self.face_names
+
+    def cameraExit(self):
+        camera.release()
+
     def get_jpg_bytes(self):
         frame = self.get_frame()
         # We are using Motion JPEG, but OpenCV defaults to capture raw images,
         # so we must encode it into JPEG in order to correctly display the
         # video stream.
-        ret, jpg = cv2.imencode('.jpg', frame)
-        return jpg.tobytes()
+        jpg = cv2.imencode('.jpg', frame)
 
+        return jpg.tobytes()
 
 if __name__ == '__main__':
     face_recog = FaceRecog()
@@ -108,11 +116,12 @@ if __name__ == '__main__':
         # show the frame
         cv2.imshow("Frame", frame)
         key = cv2.waitKey(1) & 0xFF
-
+        
         # if the `q` key was pressed, break from the loop
         if key == ord("q"):
             break
 
+    camera.release()
     # do a bit of cleanup
     cv2.destroyAllWindows()
     print('finish')
