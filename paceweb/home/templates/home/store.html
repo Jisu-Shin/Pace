@@ -18,6 +18,8 @@
         var data = JSON.parse(e2.data);
         var message = data['message'];
         document.querySelector('#chatlog2').value += (message + '\n');
+        if(message == "complete")
+            location.href = '/Store/Shistory';
     };
 
     chatSocket.onopen=function (e2) {

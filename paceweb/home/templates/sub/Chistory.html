@@ -11,7 +11,7 @@
             <div class="pointBox">
                 <table class="point_table">
                     <caption>
-                        <p class="user_phoneNumber">{{user_point.user_id}}</p>
+                        <p class="user_phoneNumber">{{user.user_id}}</p>
                         <p class="user_text">님</p>
                     </caption>
                     <tbody>
@@ -25,32 +25,24 @@
                     <tr class="use">
                         <th>사용 포인트</th>
                         <td>
-                            <input class="input_point" 
-                                   id="use_point" 
-                                   type="text">
+                            <p class="point" id="use_point">0</p>
                             <p class="text">원</p>
                         </td>
                     </tr>
                     <tr class="total">
                         <th>누적 포인트</th>
                         <td>
-                            <p class="point" id="total_point">{{user_point.user_point}}</p>
+                            <p class="point" id="total_point">{{user.user_point}}</p>
                             <p class="text">원</p>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="btnBox">
-                <button id="useBtn">
-                    사용하기
-                </button>
-                <button id="addBtn">
-                    적립하기
-                </button>
-            </div>
         </div>
     </div>
-    <script type="text/javascript" src="{% static 'paceweb/js/history.js' %}"></script>
+    <script>
+        
+    </script>
 </body>
 </html>

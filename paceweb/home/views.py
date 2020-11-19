@@ -1,8 +1,9 @@
 from django.views.generic import TemplateView
 from . import models
 import json
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render,redirect
+from django.http import HttpResponse,HttpResponseRedirect
+from django.urls import reverse
 from django.http.response import StreamingHttpResponse
 from django.template import loader
 from PIL import Image
@@ -28,18 +29,6 @@ def index(request):
 #         'latest_question_list': "test",
     }
     return HttpResponse(template.render(context, request))
-
-def history(request):
-    print(customer_name)
-    user_point = UserInfo.objects.get(user_id=customer_name)
-    template = loader.get_template('sub/history.html')
-    context = {
-        "user_point": user_point
-#         'login_success' : False,
-#         'latest_question_list': "test",
-    }
-    return HttpResponse(template.render(context, request))  
-
 
 
 def call_pop(request):
@@ -109,3 +98,26 @@ class Store(TemplateView):
         ins.save()
 
         return HttpResponse('')
+
+def Shistory(request):
+    print(customer_name)
+    user = UserInfo.objects.get(user_id=customer_name)
+    template = loader.get_template('sub/Shistory.html')
+    context = {
+        "user": user
+#         'login_success' : False,
+#         'latest_question_list': "test",
+    }
+    return HttpResponse(template.render(context, request))  
+
+def Chistory(request):
+    print(customer_name)
+    user = UserInfo.objects.get(user_id=customer_name)
+    template = loader.get_template('sub/Chistory.html')
+    context = {
+        "user": user
+#         'login_success' : False,
+#         'latest_question_list': "test",
+    }
+    return HttpResponse(template.render(context, request))
+
