@@ -18,12 +18,15 @@ class FaceRecog():
         self.known_face_encodings = []
         self.known_face_names = []
 
+        self.customer_name=""
+
         # Load sample pictures and learn how to recognize it.
         dirname = 'knowns'
 
         # 이 파일만 실행시킬경우 26번줄 주석 필요
         # django로 실행할 경우 오류가 나기때문에 필요하다
-        os.chdir(".\home\PaceFramework\Pace")
+        print(os.getcwd())
+        os.chdir("C:\\Users\\sjszz\\Documents\\1팀플linc\\Pace\\paceweb\\home")
 
         files = os.listdir(dirname)
 
@@ -45,6 +48,13 @@ class FaceRecog():
     def __del__(self):
         cv2.destroyAllWindows()
         #self.video.release()
+
+    def get_name(self):
+        print("face_recog :",self.face_names)
+        return self.face_names
+
+    def destory(self):
+        self.video.release()
 
     def get_frame(self):
         # Grab a single frame of video
@@ -80,7 +90,7 @@ class FaceRecog():
                 self.face_names.append(name)
 
         self.process_this_frame = not self.process_this_frame
-
+        
         # Display the results
         for (top, right, bottom, left), name in zip(self.face_locations, self.face_names):
             # Scale back up face locations since the frame we detected in was scaled to 1/4 size
@@ -109,7 +119,7 @@ class FaceRecog():
 
 if __name__ == '__main__':
     cam = FaceRecog()
-    print(cam.known_face_names)
+
     while True:
         frame = cam.get_frame()
 

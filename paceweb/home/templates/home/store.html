@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title>Store</title>
+</head>
+<div><button id="btn2">PostingW</button></div>
+<br>
+<textarea id="chatlog2" cols="100" rows="20"></textarea><br/>
+<script>
+    username='{{ username }}'
+    
+    var chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/test/'+username+'/');
+
+    chatSocket.onmessage = function(e) {
+        console.log(e);
+        var data = JSON.parse(e.data);
+        var message = data['message'];
+        document.querySelector('#chatlog2').value += (message + '\n');
+    };
+
+    chatSocket.onopen=function (e) {
+      console.log("연결 성공");
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error(username);
+        console.error('Chat socket closed unexpectedly');
+    };
+
+
+    document.querySelector("#btn2").addEventListener("click", (e) => {
+        chatSocket.send(JSON.stringify({
+            'message': "shareme - > alarm",
+            'change' : "{% url 'call_cam' %}"
+        }));
+    });
+</script>
+</html>

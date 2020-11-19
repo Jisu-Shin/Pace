@@ -1,3 +1,8 @@
 from django.db import models
 
-# Create your models here.
+class Custom(models.Model):
+    message=models.CharField(max_length=100)
+
+class Store(models.Model):
+    message=models.CharField(max_length=100)
+

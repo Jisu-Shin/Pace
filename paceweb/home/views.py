@@ -1,21 +1,22 @@
+from django.views.generic import TemplateView
+from . import models
+import json
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http.response import StreamingHttpResponse
-from django.http import Http404, HttpResponseNotFound
 from django.template import loader
+from PIL import Image
 
 # 얼굴인식 연결
-from home.PaceFramework.Pace.face_recog import FaceRecog
+from home.face_recog import FaceRecog
 import os
 
 # 지워도 되나
 import logging
 
-face = FaceRecog()
+global face
  
-def error(request):
-    #return HttpResponseNotFound('<h1>not found</h1>')
-    raise Http404("Not Found")
+
 
 def index(request):
     template = loader.get_template('home/index.html')
@@ -54,11 +55,57 @@ def call_pop(request):
 
 
 def gen(fr):
-    while True:
+    for i in range(10):
         jpg_bytes = fr.get_jpg_bytes()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + jpg_bytes + b'\r\n\r\n')
-
+    print(fr.get_name())
 
 def call_cam(request):
+    face=FaceRecog()
     return StreamingHttpResponse(gen(face),content_type='multipart/x-mixed-replace; boundary=frame')
+
+def open_img(request):
+    red = Image.new('RGB', (500, 500), (255,0,0,0))
+    response = HttpResponse(content_type="image/jpeg")
+    red.save(response, "JPEG")
+    return response
+
+
+
+class Custom(TemplateView):
+    template_name = "home/custom.html"
+    def get_context_data(self, **kwargs):
+        context = super(TemplateView, self).get_context_data()
+        print("user",self.request.user.username)
+        context['username'] = self.request.user.username
+
+        return context
+
+    def post(self, request, **kwargs):
+        ins=models.ShareMe()
+        data_unicode=request.body.decode('utf-8')
+        data=json.loads(data_unicode)
+        ins.message=data['message']
+        ins.save()
+
+        return HttpResponse('')
+
+
+class Store(TemplateView):
+    template_name = "home/store.html"
+
+    def get_context_data(self, **kwargs):
+        context=super(TemplateView, self).get_context_data()
+        context['username']=self.request.user.username
+
+        return context
+
+    def post(self, request, **kwargs):
+        ins=models.Alarm()
+        data_unicode=request.body.decode('utf-8')
+        data=json.loads(data_unicode)
+        ins.message=data['message']
+        ins.save()
+
+        return HttpResponse('')
