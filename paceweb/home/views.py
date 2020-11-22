@@ -19,33 +19,13 @@ import logging
 
 global face
  
-
+customer_name=None
 
 def index(request):
     template = loader.get_template('home/index.html')
     context = {
 #         'login_success' : False,
 #         'latest_question_list': "test",
-    }
-    return HttpResponse(template.render(context, request))
-
-def history(request):
-    user_point = UserInfo.objects.get(user_id='jisu1105')
-    template = loader.get_template('sub/history.html')
-    context = {
-        "user_point": user_point
-#         'login_success' : False,
-#         'latest_question_list': "test",
-    }
-    return HttpResponse(template.render(context, request))  
-
-# 새로운 페이지 생기면 home>urls.py 수정해야함
-def popup_chat_home(request):
-    template = loader.get_template('home/new_page.html')
-    context = {
-        'login_success' : False,
-        'initMessages' : ["스타필드 코엑스점 채팅 홈페이지에 오신것을 환영합니다",
-                          "스타필드 코엑스점 챗봇이 제품, 서비스, 주요기술, 연락처에 대해 답변합니다."]
     }
     return HttpResponse(template.render(context, request))
 
@@ -64,7 +44,11 @@ def gen(fr):
         jpg_bytes = fr.get_jpg_bytes()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + jpg_bytes + b'\r\n\r\n')
-    print(fr.get_name())
+               
+    global customer_name 
+    customer_name= fr.get_name()[0]
+    print("gen",customer_name)
+    
 
 def call_cam(request):
     face=FaceRecog()
@@ -76,6 +60,54 @@ def open_img(request):
     red.save(response, "JPEG")
     return response
 
+
+# def get_name(request):
+#     global customer_name 
+#     print("get_name: ",customer_name)
+#     context= {
+#         'customer' : customer_name
+#     }
+#     return HttpResponse(json.dumps(context),content_type="application/json")
+
+
+
+# def history(request):
+#     print("history",customer_name)
+#     user_point = UserInfo.objects.get(user_id=customer_name)
+#     template = loader.get_template('sub/history.html')
+#     context = {
+#         "user_point": user_point
+#     }
+#     return HttpResponse(template.render(context))  
+
+
+def get_name():
+    global customer_name
+    return customer_name
+
+class history(TemplateView):    
+    template_name = "sub/history.html"
+    
+
+    def get_context_data(self, **kwargs):
+        context = super(TemplateView, self).get_context_data()
+        print("user",self.request.user.username)
+        name = get_name()
+        print("name",name)
+        context['username'] = self.request.user.username
+        user_point = UserInfo.objects.get(user_id=name)
+        context['user_point'] = user_point
+
+        return context
+
+    def post(self, request, **kwargs):
+        ins=models.ShareMe()
+        data_unicode=request.body.decode('utf-8')
+        data=json.loads(data_unicode)
+        ins.message=data['message']
+        ins.save()
+
+        return HttpResponse('')
 
 
 class Custom(TemplateView):

@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <title>Custom</title>
 </head>
+
 <body>
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br/>
+    <textarea id="chat-log" cols="100" rows="20"></textarea><br />
     <div><button id="btn">PostingW</button></div>
     <br>
     <img id="bg" src="{% url 'open_img' %}">
     <br>
 </body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
-    username='{{ username }}'
-    
+    username = '{{ username }}'
+
     var chatSocket = new WebSocket(
         'ws://' + window.location.host +
-        '/ws/test/'+username+'/');
+        '/ws/test/' + username + '/');
 
-    chatSocket.onmessage = function(e) {
+    chatSocket.onmessage = function (e) {
         console.log(e);
         var data = JSON.parse(e.data);
         var message = data['message'];
         var change = data['change'];
         document.querySelector('#chat-log').value += (message + '\n');
         document.querySelector('#bg').src = change;
+        location.href="{% url 'history' %}"
+
     };
 
-    chatSocket.onopen=function (e) {
-      console.log("연결 성공");
+
+    chatSocket.onopen = function (e) {
+        console.log("연결 성공");
     };
 
-    chatSocket.onclose = function(e) {
+    chatSocket.onclose = function (e) {
         console.error('Chat socket closed unexpectedly');
     };
 
@@ -39,9 +45,10 @@
     document.querySelector("#btn").addEventListener("click", (e) => {
         chatSocket.send(JSON.stringify({
             'message': "alram - > shareme",
-            'change':' ' 
-            
+            'change': ' '
+
         }));
     });
 </script>
+
 </html>
