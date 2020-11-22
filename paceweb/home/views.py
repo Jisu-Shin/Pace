@@ -1,8 +1,9 @@
 from django.views.generic import TemplateView
 from . import models
 import json
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render,redirect
+from django.http import HttpResponse,HttpResponseRedirect
+from django.urls import reverse
 from django.http.response import StreamingHttpResponse
 from django.template import loader
 from PIL import Image
@@ -47,7 +48,6 @@ def gen(fr):
                
     global customer_name 
     customer_name= fr.get_name()[0]
-    print("gen",customer_name)
     
 
 def call_cam(request):
@@ -85,8 +85,8 @@ def get_name():
     global customer_name
     return customer_name
 
-class history(TemplateView):    
-    template_name = "sub/history.html"
+class Chistory(TemplateView):    
+    template_name = "sub/Chistory.html"
     
 
     def get_context_data(self, **kwargs):
@@ -146,3 +146,14 @@ class Store(TemplateView):
         ins.save()
 
         return HttpResponse('')
+
+def Shistory(request):
+    print(customer_name)
+    user = UserInfo.objects.get(user_id=customer_name)
+    template = loader.get_template('sub/Shistory.html')
+    context = {
+        "user": user
+#         'login_success' : False,
+#         'latest_question_list': "test",
+    }
+    return HttpResponse(template.render(context, request))  

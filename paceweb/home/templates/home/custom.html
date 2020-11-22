@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Custom</title>
+    
 </head>
 
 <body>
@@ -26,9 +27,10 @@
         var data = JSON.parse(e.data);
         var message = data['message'];
         var change = data['change'];
+        var endpoint = $("#bg").attr("src");
         document.querySelector('#chat-log').value += (message + '\n');
         document.querySelector('#bg').src = change;
-        location.href="{% url 'history' %}"
+        location.href="{% url 'Chistory' %}"
 
     };
 
@@ -42,12 +44,12 @@
     };
 
 
-    document.querySelector("#btn").addEventListener("click", (e) => {
+    document.querySelector("#btn").addEventListener("click", (e2) => {
         chatSocket.send(JSON.stringify({
-            'message': "alram - > shareme",
-            'change': ' '
-
+            'message': "complete",
+            'change':' ' 
         }));
+        location.href = '/Custom/Chistory';
     });
 </script>
 

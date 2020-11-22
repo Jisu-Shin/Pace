@@ -17,7 +17,7 @@
             console.log("history->store")
             chatSocket.onopen = function(e){
                 chatSocket.send(JSON.stringify({
-                'message': "history - > store",
+                'message': "complete",
                 'change': ' '
                 
             }))
@@ -62,14 +62,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <div class="btnBox">
-                <button id="useBtn">
-                    사용하기
-                </button>
-                <button id="addBtn">
-                    적립하기
-                </button>
             </div>
         </div>
     </div>
