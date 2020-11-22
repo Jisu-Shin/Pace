@@ -27,6 +27,17 @@
     </footer>
   </div>
 
-  <script type="text/javascript" src="{% static 'paceweb/js/index.js' %}"></script>
+  <script>
+    document.getElementById("cameraBtn").addEventListener("click", loadCamera);
+    document.getElementById("historyBtn").addEventListener("click", changPage);
+
+    function loadCamera(e) {
+        location.href = '/Store';
+    }
+
+    function changPage(e) {
+        location.href = '/Custom';
+    }
+  </script>
 </body>
 </html> 

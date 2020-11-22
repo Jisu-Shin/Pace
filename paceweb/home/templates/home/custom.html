@@ -16,7 +16,7 @@
 
 <script>
     username='{{ username }}'
-    
+    console.log(username)
     var chatSocket = new WebSocket(
         'ws://' + window.location.host +
         '/ws/test/'+username+'/');
@@ -47,10 +47,10 @@
 
     document.querySelector("#btn").addEventListener("click", (e2) => {
         chatSocket.send(JSON.stringify({
-            'message': "alram - > shareme",
-            'change':'open_img' 
-            
+            'message': "complete",
+            'change':' ' 
         }));
+        location.href = '/Custom/Chistory';
     });
 </script>
 </html>
