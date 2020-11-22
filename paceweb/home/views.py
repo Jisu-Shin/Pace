@@ -85,8 +85,8 @@ def get_name():
     global customer_name
     return customer_name
 
-class history(TemplateView):    
-    template_name = "sub/history.html"
+class Chistory(TemplateView):    
+    template_name = "sub/Chistory.html"
     
 
     def get_context_data(self, **kwargs):
@@ -157,14 +157,3 @@ def Shistory(request):
 #         'latest_question_list': "test",
     }
     return HttpResponse(template.render(context, request))  
-
-def Chistory(request):
-    print(customer_name    print(customer_name))
-    user = UserInfo.objects.get(user_id=customer_name)
-    template = loader.get_template('sub/Chistory.html')
-    context = {
-        "user": user
-#         'login_success' : False,
-#         'latest_question_list': "test",
-    }
-    return HttpResponse(template.render(context, request))

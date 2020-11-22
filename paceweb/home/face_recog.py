@@ -28,7 +28,7 @@ class FaceRecog():
         # print(os.getcwd())
         # ryeon -> os.chdir("C:\\Users\\luvli\\OneDrive\\Documents\\Pace\\paceweb\\home")
         # jisu -> os.chdir("C:\\Users\\sjszz\\Documents\\1팀플linc\\Pace\\paceweb\\home")
-        os.chdir("C:\\Users\\luvli\\OneDrive\\Documents\\Pace\\paceweb\\home")
+        os.chdir("C:\\Users\\sjszz\\Documents\\1팀플linc\\Pace\\paceweb\\home")
 
         files = os.listdir(dirname)
 
