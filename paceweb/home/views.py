@@ -42,13 +42,15 @@ def call_pop(request):
 
 
 def gen(fr):
-    for i in range(10):
+    while True:
         jpg_bytes = fr.get_jpg_bytes()
         yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + jpg_bytes + b'\r\n\r\n')
-               
-    global customer_name 
-    customer_name= fr.get_name()[0]
+               b'Content-Type: image/jpeg\r\n\r\n' + jpg_bytes + b'\r\n\r\n')       
+        global customer_name 
+        customer_name= fr.get_name()[0]
+        if customer_name != "Unknown":
+            location.href='../Chistory'
+
     print(customer_name)
 
 def call_cam(request):
@@ -111,7 +113,7 @@ def Shistory(request):
     return HttpResponse(template.render(context, request))  
 
 def Chistory(request):
-    print(customer_name    print(customer_name))
+    print(customer_name)
     user = UserInfo.objects.get(user_id=customer_name)
     template = loader.get_template('sub/Chistory.html')
     context = {
