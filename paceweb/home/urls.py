@@ -7,8 +7,9 @@ urlpatterns = [
     path('call_pop', views.call_pop, name='call_pop'),
     path('call_cam', views.call_cam, name='call_cam'),
     path('open_img', views.open_img, name='open_img'),
+   # path('get_name', views.get_name, name='get_name'),
+    path('Chistory', views.Chistory.as_view(), name='Chistory'),
     path('Store', views.Store.as_view()),
-    path('Custom', views.Custom.as_view()),
-    path('Store/Shistory/', views.Shistory, name='Shistory'),
-    path('Custom/Chistory/', views.Chistory, name='Chistory'),
+    path('Shistory', views.Shistory, name='Shistory'),
+    path('Custom', views.Custom.as_view(),name='Custom'),
 ]

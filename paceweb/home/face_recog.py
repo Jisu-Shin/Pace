@@ -52,7 +52,6 @@ class FaceRecog():
         #self.video.release()
 
     def get_name(self):
-        print("face_recog :",self.face_names)
         return self.face_names
 
     def destory(self):

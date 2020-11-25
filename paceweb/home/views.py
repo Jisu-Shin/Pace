@@ -20,7 +20,7 @@ import logging
 
 global face
  
-customer_name=""
+customer_name=None
 
 def index(request):
     template = loader.get_template('home/index.html')
@@ -29,7 +29,6 @@ def index(request):
 #         'latest_question_list': "test",
     }
     return HttpResponse(template.render(context, request))
-
 
 def call_pop(request):
 
@@ -42,16 +41,14 @@ def call_pop(request):
 
 
 def gen(fr):
-    while True:
+    for i in range(10):
         jpg_bytes = fr.get_jpg_bytes()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + jpg_bytes + b'\r\n\r\n')       
-        global customer_name 
-        customer_name= fr.get_name()[0]
-        if customer_name != "Unknown":
-            location.href='../Chistory'
-
-    print(customer_name)
+               
+    global customer_name 
+    customer_name= fr.get_name()[0]
+    
 
 def call_cam(request):
     face=FaceRecog()
@@ -62,6 +59,55 @@ def open_img(request):
     response = HttpResponse(content_type="image/jpeg")
     red.save(response, "JPEG")
     return response
+
+
+# def get_name(request):
+#     global customer_name 
+#     print("get_name: ",customer_name)
+#     context= {
+#         'customer' : customer_name
+#     }
+#     return HttpResponse(json.dumps(context),content_type="application/json")
+
+
+
+# def history(request):
+#     print("history",customer_name)
+#     user_point = UserInfo.objects.get(user_id=customer_name)
+#     template = loader.get_template('sub/history.html')
+#     context = {
+#         "user_point": user_point
+#     }
+#     return HttpResponse(template.render(context))  
+
+
+def get_name():
+    global customer_name
+    return customer_name
+
+class Chistory(TemplateView):    
+    template_name = "sub/Chistory.html"
+    
+
+    def get_context_data(self, **kwargs):
+        context = super(TemplateView, self).get_context_data()
+        print("user",self.request.user.username)
+        name = get_name()
+        print("name",name)
+        context['username'] = self.request.user.username
+        user_point = UserInfo.objects.get(user_id=name)
+        context['user_point'] = user_point
+
+        return context
+
+    def post(self, request, **kwargs):
+        ins=models.ShareMe()
+        data_unicode=request.body.decode('utf-8')
+        data=json.loads(data_unicode)
+        ins.message=data['message']
+        ins.save()
+
+        return HttpResponse('')
 
 
 class Custom(TemplateView):
@@ -111,14 +157,3 @@ def Shistory(request):
 #         'latest_question_list': "test",
     }
     return HttpResponse(template.render(context, request))  
-
-def Chistory(request):
-    print(customer_name)
-    user = UserInfo.objects.get(user_id=customer_name)
-    template = loader.get_template('sub/Chistory.html')
-    context = {
-        "user": user
-#         'login_success' : False,
-#         'latest_question_list': "test",
-    }
-    return HttpResponse(template.render(context, request))

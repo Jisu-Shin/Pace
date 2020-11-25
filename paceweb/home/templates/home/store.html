@@ -19,7 +19,7 @@
         var message = data['message'];
         document.querySelector('#chatlog2').value += (message + '\n');
         if(message == "complete")
-            location.href = '/Store/Shistory';
+        location.href="{% url 'Shistory' %}"
     };
 
     chatSocket.onopen=function (e2) {
