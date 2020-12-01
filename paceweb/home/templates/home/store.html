@@ -2,14 +2,22 @@
 <head>
     <title>Store</title>
 </head>
-<div><button id="btn2">500</button></div>
-<br>
-<textarea id="chatlog2" cols="100" rows="20"></textarea><br/>
+<div id="container">
+    <div id="storeMain">
+        <div><button id="btn2">500</button></div>
+        <br>
+        <textarea id="chatlog2" cols="100" rows="20"></textarea><br/>
+    </div>
+</div>
 <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 {% csrf_token %}
 <script type="text/javascript">
     // 버튼 동작
     $('#btn2').click(function() {
+        var parent = document.querySelector("#container");
+        var deleteChild = document.querySelector("#storeMain");
+        parent.removeChild(deleteChild);
+
         var use_point = $('#btn2').text();
         $.ajax({
             method: "POST",
@@ -26,18 +34,22 @@
                 console.log("error");
             }
         });
-    });
+
         $.ajax({
             method: "GET",
-            url: "{% url 'Store' %}",
+            dataType: "html",
+            url: "{% url 'Custom' %}",
             data: {
             },
             success: function(response) {
                 console.log("END 성공");
+                $('#container').load("{% url 'Shistory' %}");
             },
             error: function(response) {
                 console.log("END Error");
             }
         });
+    });
+        
 </script>
 </html>

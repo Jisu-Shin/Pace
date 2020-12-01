@@ -143,13 +143,13 @@ class Store(TemplateView):
 
         return JsonResponse({"message": message});
 
-def Shistory(request):
-    print(customer_name)
-    user = UserInfo.objects.get(user_id=customer_name)
-    template = loader.get_template('sub/Shistory.html')
-    context = {
-        "user": user
-#         'login_success' : False,
-#         'latest_question_list': "test",
-    }
-    return HttpResponse(template.render(context, request))  
+class Shistory(TemplateView):
+    template_name = "sub/Shistory.html"
+
+    @csrf_exempt
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+    @csrf_exempt
+    def post(self, request, *args, **kwargs):
+        return JsonResponse({"message": "success"});  
