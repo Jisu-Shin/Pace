@@ -13,9 +13,19 @@
             'ws://' + window.location.host +
             '/ws/test/' + username + '/');
 
-        document.addEventListener("DOMContentLoaded", (e) => {
+        chatSocket.onmessage = function(e3) {      
+            console.log(e3)
+            var data = JSON.parse(e3.data);
+            var message = data['message'];
+            var change = data['change'];
+            if(message == "init")
+            location.href="{% url 'Custom' %}"
+            else document.getElementById('use_point').innerText = change
+        };
+
+        document.addEventListener("DOMContentLoaded", (e2) => {
             console.log("history->store")
-            chatSocket.onopen = function(e){
+            chatSocket.onopen = function(e2){
                 chatSocket.send(JSON.stringify({
                 'message': "complete",
                 'change': ' '
@@ -49,7 +59,7 @@
                         <tr class="use">
                             <th>사용 포인트</th>
                             <td>
-                                <input class="input_point" id="use_point" type="text">
+                                <p class="point" id="use_point"></p>
                                 <p class="text">원</p>
                             </td>
                         </tr>
@@ -67,7 +77,6 @@
     </div>
 
 
-    <script type="text/javascript" src="{% static 'paceweb/js/history.js' %}"></script>
 </body>
 
 </html>

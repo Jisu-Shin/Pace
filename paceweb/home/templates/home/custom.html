@@ -9,46 +9,38 @@
 
 <body>
     <textarea id="chat-log" cols="100" rows="20"></textarea><br />
-    <div id="btnBox"><button id="btn">PostingW</button></div>
     <br>
     <img id="bg" src="{% url 'open_img' %}">
     <br>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
-    username='연결 완료'
-    
-    $.ajax({
-        method: "POST",
-        url: "{% url 'Custom' %}",
-        data: {
-            "message": "연결이 종료",
-            "csrfmiddlewaretoken" : "{{csrf_token}}"
-        },
-        success: function(response) {
-            console.log("success");
-        },
-        error: function(response) {
-            console.log("error");
-        }
-    })
+    username = '{{ username }}'
 
-    var ms = "OK";
-    $.ajax({
-        method: "GET",
-        url: "{% url 'Store' %}",
-        data: {
-            "message": ms,
-        },
-        success: function(response) {
-            console.log("END 성공");
-            var a = $(response).find('#btn2');
-            console.log(response);
-        },
-        error: function(response) {
-            console.log("END Error");
-        }
-    });
+    var chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/test/' + username + '/');
+
+    chatSocket.onmessage = function (e) {
+        console.log(e);
+        var data = JSON.parse(e.data);
+        var message = data['message'];
+        var change = data['change'];
+        document.querySelector('#chat-log').value += (message + '\n');
+        document.querySelector('#bg').src = change;
+        location.href="{% url 'Chistory' %}"
+
+    };
+
+
+    chatSocket.onopen = function (e) {
+        console.log("연결 성공");
+    };
+
+    chatSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
 </script>
 
 </html>

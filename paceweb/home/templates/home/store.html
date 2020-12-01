@@ -1,55 +1,43 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Store</title>
 </head>
-<div id="container">
-    <div id="storeMain">
-        <div><button id="btn2">500</button></div>
-        <br>
-        <textarea id="chatlog2" cols="100" rows="20"></textarea><br/>
-    </div>
-</div>
-<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-{% csrf_token %}
-<script type="text/javascript">
-    // 버튼 동작
-    $('#btn2').click(function() {
-        var parent = document.querySelector("#container");
-        var deleteChild = document.querySelector("#storeMain");
-        parent.removeChild(deleteChild);
+<div><button id="btn2">PostingW</button></div>
+<br>
+<textarea id="chatlog2" cols="100" rows="20"></textarea><br/>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+    username='{{ username }}'
+    
+    var chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/test/'+username+'/');
 
-        var use_point = $('#btn2').text();
-        $.ajax({
-            method: "POST",
-            url: "{% url 'Store' %}",
-            data: {
-                "message": use_point,
-                "csrfmiddlewaretoken" : "{{csrf_token}}"
-            },
-            success: function(response) {
-                console.log("success");
-                console.log(response.message);
-            },
-            error: function(response) {
-                console.log("error");
-            }
-        });
+    chatSocket.onmessage = function(e2) {
+        console.log(e2);
+        var data = JSON.parse(e2.data);
+        var message = data['message'];
+        document.querySelector('#chatlog2').value += (message + '\n');
+        if(message == "complete")
+        location.href="{% url 'Shistory' %}"
+    };
 
-        $.ajax({
-            method: "GET",
-            dataType: "html",
-            url: "{% url 'Custom' %}",
-            data: {
-            },
-            success: function(response) {
-                console.log("END 성공");
-                $('#container').load("{% url 'Shistory' %}");
-            },
-            error: function(response) {
-                console.log("END Error");
-            }
-        });
+    chatSocket.onopen=function (e2) {
+      console.log("연결 성공");
+    };
+
+    chatSocket.onclose = function(e2) {
+        console.error(username);
+        console.error('Chat socket closed unexpectedly');
+    };
+
+
+    document.querySelector("#btn2").addEventListener("click", (e) => {
+        chatSocket.send(JSON.stringify({
+            'message': "shareme - > alarm",
+            'change' : "call_cam"
+        }));
     });
-        
 </script>
 </html>

@@ -10,7 +10,7 @@ from django.http.response import StreamingHttpResponse
 from django.template import loader
 from PIL import Image
 
-from .models import *
+from .models import UserInfo
 
 # 얼굴인식 연결
 from home.face_recog import FaceRecog
@@ -46,7 +46,7 @@ def gen(fr):
     for i in range(10):
         jpg_bytes = fr.get_jpg_bytes()
         yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + jpg_bytes + b'\r\n\r\n')       
+               b'Content-Type: image/jpeg\r\n\r\n' + jpg_bytes + b'\r\n\r\n')
                
     global customer_name 
     customer_name= fr.get_name()[0]
@@ -90,9 +90,10 @@ def get_name():
 class Chistory(TemplateView):    
     template_name = "sub/Chistory.html"
     
+
     def get_context_data(self, **kwargs):
         context = super(TemplateView, self).get_context_data()
-        print("user",self.request.user.username)
+        print("chistory user",self.request.user.username)
         name = get_name()
         print("name",name)
         context['username'] = self.request.user.username
@@ -110,46 +111,73 @@ class Chistory(TemplateView):
 
         return HttpResponse('')
 
+
 class Custom(TemplateView):
     template_name = "home/custom.html"
-    @csrf_exempt
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+    def get_context_data(self, **kwargs):
+        context = super(TemplateView, self).get_context_data()
+        print("user",self.request.user.username)
+        context['username'] = self.request.user.username
 
-    @csrf_exempt
-    def post(self, request, *args, **kwargs):
-        return JsonResponse({"message": "success"});
+        return context
+
+    def post(self, request, **kwargs):
+        ins=models.ShareMe()
+        data_unicode=request.body.decode('utf-8')
+        data=json.loads(data_unicode)
+        ins.message=data['message']
+        ins.save()
+
+        return HttpResponse('')
 
 
 class Store(TemplateView):
     template_name = "home/store.html"
-    @csrf_exempt
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
 
-    @csrf_exempt
-    def post(self, request, *args, **kwargs):
-        message = request.POST['message'];
-        point = int(message)
-        print(type(point));
-        # DB 값 변경 및 변경된 값 화면에 전달
-        user = UserInfo.objects.get(user_id="ryeon")
-        if user.user_point >= point:
-            user.user_point -= point
-            user.save()
-            message = user.user_point
-        else :
-            message = "You don't use point"
+    def get_context_data(self, **kwargs):
+        context=super(TemplateView, self).get_context_data()
+        context['username']=self.request.user.username
 
-        return JsonResponse({"message": message});
+        return context
 
-class Shistory(TemplateView):
+    def post(self, request, **kwargs):
+        ins=models.Alarm()
+        data_unicode=request.body.decode('utf-8')
+        data=json.loads(data_unicode)
+        ins.message=data['message']
+        ins.save()
+
+        return HttpResponse('')
+
+
+class Shistory(TemplateView):    
     template_name = "sub/Shistory.html"
+    
 
-    @csrf_exempt
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+    def get_context_data(self, **kwargs):
+        context = super(TemplateView, self).get_context_data()
+        print("shistory user",self.request.user.username)
+        name = get_name()
+        print("name",name)
+        context['username'] = self.request.user.username
+        user_point = UserInfo.objects.get(user_id=name)
+        context['user_point'] = user_point
 
-    @csrf_exempt
-    def post(self, request, *args, **kwargs):
-        return JsonResponse({"message": "success"});  
+        return context
+
+    def post(self, request, **kwargs):
+        if request.method != 'POST':
+            ins=models.Alarm()
+            data_unicode=request.body.decode('utf-8')
+            data=json.loads(data_unicode)
+            ins.message=data['message']
+            ins.save()
+            return HttpResponse('')
+        else:
+            point = request.POST['message']
+            name = get_name()
+            customerInfo = UserInfo.objects.get(user_id=name)
+            customerInfo.user_point = point
+            customerInfo.save()
+            return render(request, self.template_name)
+
