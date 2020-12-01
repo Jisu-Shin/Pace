@@ -9,7 +9,6 @@
 
 <body>
     <textarea id="chat-log" cols="100" rows="20"></textarea><br />
-    <div><button id="btn">PostingW</button></div>
     <br>
     <img id="bg" src="{% url 'open_img' %}">
     <br>
@@ -27,7 +26,6 @@
         var data = JSON.parse(e.data);
         var message = data['message'];
         var change = data['change'];
-        var endpoint = $("#bg").attr("src");
         document.querySelector('#chat-log').value += (message + '\n');
         document.querySelector('#bg').src = change;
         location.href="{% url 'Chistory' %}"
@@ -43,14 +41,6 @@
         console.error('Chat socket closed unexpectedly');
     };
 
-
-    document.querySelector("#btn").addEventListener("click", (e2) => {
-        chatSocket.send(JSON.stringify({
-            'message': "complete",
-            'change':' ' 
-        }));
-        location.href = '/Custom/Chistory';
-    });
 </script>
 
 </html>

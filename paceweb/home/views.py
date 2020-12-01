@@ -91,7 +91,7 @@ class Chistory(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(TemplateView, self).get_context_data()
-        print("user",self.request.user.username)
+        print("chistory user",self.request.user.username)
         name = get_name()
         print("name",name)
         context['username'] = self.request.user.username
@@ -147,13 +147,28 @@ class Store(TemplateView):
 
         return HttpResponse('')
 
-def Shistory(request):
-    print(customer_name)
-    user = UserInfo.objects.get(user_id=customer_name)
-    template = loader.get_template('sub/Shistory.html')
-    context = {
-        "user": user
-#         'login_success' : False,
-#         'latest_question_list': "test",
-    }
-    return HttpResponse(template.render(context, request))  
+
+class Shistory(TemplateView):    
+    template_name = "sub/Shistory.html"
+    
+
+    def get_context_data(self, **kwargs):
+        context = super(TemplateView, self).get_context_data()
+        print("shistory user",self.request.user.username)
+        name = get_name()
+        print("name",name)
+        context['username'] = self.request.user.username
+        user_point = UserInfo.objects.get(user_id=name)
+        context['user_point'] = user_point
+
+        return context
+
+    def post(self, request, **kwargs):
+        ins=models.ShareMe()
+        data_unicode=request.body.decode('utf-8')
+        data=json.loads(data_unicode)
+        ins.message=data['message']
+        ins.save()
+
+        return HttpResponse('')
+
