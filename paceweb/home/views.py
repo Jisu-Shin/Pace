@@ -1,6 +1,8 @@
 from django.views.generic import TemplateView
 from . import models
 import json
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
@@ -8,7 +10,7 @@ from django.http.response import StreamingHttpResponse
 from django.template import loader
 from PIL import Image
 
-from .models import UserInfo
+from .models import *
 
 # 얼굴인식 연결
 from home.face_recog import FaceRecog
@@ -88,7 +90,6 @@ def get_name():
 class Chistory(TemplateView):    
     template_name = "sub/Chistory.html"
     
-
     def get_context_data(self, **kwargs):
         context = super(TemplateView, self).get_context_data()
         print("user",self.request.user.username)
@@ -109,43 +110,38 @@ class Chistory(TemplateView):
 
         return HttpResponse('')
 
-
 class Custom(TemplateView):
     template_name = "home/custom.html"
-    def get_context_data(self, **kwargs):
-        context = super(TemplateView, self).get_context_data()
-        print("user",self.request.user.username)
-        context['username'] = self.request.user.username
+    @csrf_exempt
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
 
-        return context
-
-    def post(self, request, **kwargs):
-        ins=models.ShareMe()
-        data_unicode=request.body.decode('utf-8')
-        data=json.loads(data_unicode)
-        ins.message=data['message']
-        ins.save()
-
-        return HttpResponse('')
+    @csrf_exempt
+    def post(self, request, *args, **kwargs):
+        return JsonResponse({"message": "success"});
 
 
 class Store(TemplateView):
     template_name = "home/store.html"
+    @csrf_exempt
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
 
-    def get_context_data(self, **kwargs):
-        context=super(TemplateView, self).get_context_data()
-        context['username']=self.request.user.username
+    @csrf_exempt
+    def post(self, request, *args, **kwargs):
+        message = request.POST['message'];
+        point = int(message)
+        print(type(point));
+        # DB 값 변경 및 변경된 값 화면에 전달
+        user = UserInfo.objects.get(user_id="ryeon")
+        if user.user_point >= point:
+            user.user_point -= point
+            user.save()
+            message = user.user_point
+        else :
+            message = "You don't use point"
 
-        return context
-
-    def post(self, request, **kwargs):
-        ins=models.Alarm()
-        data_unicode=request.body.decode('utf-8')
-        data=json.loads(data_unicode)
-        ins.message=data['message']
-        ins.save()
-
-        return HttpResponse('')
+        return JsonResponse({"message": message});
 
 def Shistory(request):
     print(customer_name)

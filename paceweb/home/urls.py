@@ -9,7 +9,7 @@ urlpatterns = [
     path('open_img', views.open_img, name='open_img'),
    # path('get_name', views.get_name, name='get_name'),
     path('Chistory', views.Chistory.as_view(), name='Chistory'),
-    path('Store', views.Store.as_view()),
+    path('Store', views.Store.as_view(), name='Store'),
     path('Shistory', views.Shistory, name='Shistory'),
     path('Custom', views.Custom.as_view(),name='Custom'),
 ]
