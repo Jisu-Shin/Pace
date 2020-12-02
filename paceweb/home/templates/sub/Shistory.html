@@ -60,6 +60,7 @@
         const add_point = document.getElementById("add_point").innerHTML;
         const use_point = document.getElementById("use_point");
         const total_point = document.getElementById("total_point").innerText;
+        var use = 0;
 
         // 포인트 사용 버튼 동작
         document.getElementById("useBtn").addEventListener('click', (e) => {
@@ -69,8 +70,8 @@
         });
 
         function isValue(value) {
-            if (value != null && value != '' && value != '0') {
-                const question = confirm(value + " 포인트를 사용하시겠습니까?");
+            if(value != null && value != '') {
+                const question = confirm(value+" 포인트를 사용하시겠습니까?");
 
                 // Would you like to your points? yes!
                 if (question == true)
@@ -83,20 +84,21 @@
 
         // uesd point(DB 연동 필요. DB의 point 값을 total 값으로 업데이트 해야함)
         function usedPoint(value) {
-            console.log(value + "포인트를 사용합니다.");
-
-            const total = parseInt(total_point) - value;
-
-            alert(total + " 누적 포인트 입니다.");
+            if(value > parseInt(total_point)) {
+                alert("포인트가 부족하여 사용 불가합니다.");
+            }
+            else {
+                use = value;
+            }
         }
 
         // add point(DB 연동 필요. DB의 point 값을 total 값으로 업데이트 해야함)
         document.getElementById("addBtn").addEventListener('click', (e3) => {
             console.log("포인트를 적립합니다.");
 
-            const total = parseInt(total_point) + parseInt(add_point);
+            var total = parseInt(total_point) + parseInt(add_point) - use;
 
-            console.log(total + " 누적 포인트 입니다.");
+            postPoint(total);
 
             location.href = "{% url 'Store' %}"
 
@@ -106,6 +108,23 @@
             }));
         });
 
+        // DB에 포인트 저장 위해 view 파일로 계산된 point 값을 내보냄
+        function postPoint(point) {
+            $.ajax({
+                method: "POST",
+                url: "{% url 'Shistory' %}",
+                data: {
+                    "message": point,
+                    "csrfmiddlewaretoken" : "{{csrf_token}}"
+                },
+                success: function(response) {
+                    console.log("success");
+                },
+                error: function(response) {
+                    console.log("error");
+                }
+            });
+        }
 
         // 통신스크립트
 
