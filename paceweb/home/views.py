@@ -94,7 +94,7 @@ class Chistory(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(TemplateView, self).get_context_data()
         print("chistory user",self.request.user.username)
-        name = "jisu"
+        name = get_name()
         print("name",name)
         context['username'] = self.request.user.username
         user_point = UserInfo.objects.get(user_id=name)
@@ -157,8 +157,7 @@ class Shistory(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(TemplateView, self).get_context_data()
         print("shistory user",self.request.user.username)
-        name = "jisu"
-        # get_name()
+        name = get_name()
         print("name",name)
         context['username'] = self.request.user.username
         user_point = UserInfo.objects.get(user_id=name)
