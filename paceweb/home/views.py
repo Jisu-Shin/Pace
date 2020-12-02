@@ -1,6 +1,8 @@
 from django.views.generic import TemplateView
 from . import models
 import json
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
@@ -92,7 +94,7 @@ class Chistory(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(TemplateView, self).get_context_data()
         print("chistory user",self.request.user.username)
-        name = get_name()
+        name = "jisu"
         print("name",name)
         context['username'] = self.request.user.username
         user_point = UserInfo.objects.get(user_id=name)
@@ -155,7 +157,8 @@ class Shistory(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(TemplateView, self).get_context_data()
         print("shistory user",self.request.user.username)
-        name = get_name()
+        name = "jisu"
+        # get_name()
         print("name",name)
         context['username'] = self.request.user.username
         user_point = UserInfo.objects.get(user_id=name)
@@ -164,11 +167,18 @@ class Shistory(TemplateView):
         return context
 
     def post(self, request, **kwargs):
-        ins=models.ShareMe()
-        data_unicode=request.body.decode('utf-8')
-        data=json.loads(data_unicode)
-        ins.message=data['message']
-        ins.save()
-
-        return HttpResponse('')
+        if request.method != 'POST':
+            ins=models.Alarm()
+            data_unicode=request.body.decode('utf-8')
+            data=json.loads(data_unicode)
+            ins.message=data['message']
+            ins.save()
+            return HttpResponse('')
+        else:
+            point = request.POST['message']
+            name = get_name()
+            customerInfo = UserInfo.objects.get(user_id=name)
+            customerInfo.user_point = point
+            customerInfo.save()
+            return render(request, self.template_name)
 

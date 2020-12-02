@@ -1,43 +1,51 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>PACE</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{% static 'paceweb/css/home.css' %}">
 </head>
+
 <body>
   <div class="container">
+    <div class="exBox">
+      <div class="logo">PACE</div>
+      <br>
+      <div class="ex">PACE는 얼굴인식을 통해 포인트를 적립하는 웹 어플리케이션이다</div>
+    </div>
     <div class="btnBox">
       <button class="camera"
               id="cameraBtn">
-        포인트 적립
+        메인 화면으로 가기
       </button>
       <button class="history" 
               id="historyBtn">
-        포인트 적립 내역
+        손님 화면으로 가기
       </button>
+
     </div>
-    <footer class="footer">
-      <p>
-        Point By Face</br>
-        by. 김련경 신지수 김지원 
-      </p>
-    </footer>
   </div>
+  <footer class="footer">
+      Point By Face<br>
+      by. 김련경 신지수 김지원
+  </footer>
+
 
   <script>
     document.getElementById("cameraBtn").addEventListener("click", loadCamera);
     document.getElementById("historyBtn").addEventListener("click", changPage);
 
     function loadCamera(e) {
-        location.href = '/Store';
+      location.href = '/Store';
     }
 
     function changPage(e) {
-        location.href = '/Custom';
+      location.href = '/Custom';
     }
   </script>
 </body>
-</html> 
+
+</html>
