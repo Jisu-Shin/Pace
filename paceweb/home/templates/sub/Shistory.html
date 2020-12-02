@@ -1,21 +1,23 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" href="{% static 'paceweb/css/history.css' %}">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
+
 <body>
-    <div class="container">
-        <div class="pointContainer">
-            <H1>PACE</H1>
-            <div class="pointBox">
-                <table class="point_table">
-                    <caption>
-                        <p class="user_phoneNumber">{{user_point.user_id}}</p>
-                        <p class="user_text">님</p>
-                    </caption>
-                    <tbody>
+
+    <div class="pointContainer">
+        <div class="logo">PACE</div>
+        <div class="pointBox">
+            <table class="point_table">
+                <caption>
+                    <p class="user_phoneNumber">{{user_point.user_id}}</p>
+                    <p class="user_text">님</p>
+                </caption>
+                <tbody>
                     <tr class="add">
                         <th>적립 포인트</th>
                         <td>
@@ -26,9 +28,7 @@
                     <tr class="use">
                         <th>사용 포인트</th>
                         <td>
-                            <input class="input_point" 
-                                   id="use_point" 
-                                   type="text">
+                            <input class="input_point" id="use_point" type="text">
                             <p class="text">원</p>
                         </td>
                     </tr>
@@ -39,19 +39,23 @@
                             <p class="text">원</p>
                         </td>
                     </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="btnBox">
-                <button id="useBtn">
-                    사용하기
-                </button>
-                <button id="addBtn">
-                    적립하기
-                </button>
-            </div>
+                </tbody>
+            </table>
+        </div>
+        <div class="btnBox">
+            <button id="useBtn">
+                사용하기
+            </button>
+            <button id="addBtn">
+                적립하기
+            </button>
         </div>
     </div>
+
+    <footer class="footer">
+        Point By Face<br>
+        by. 김련경 신지수 김지원
+    </footer>
     <script>
         const add_point = document.getElementById("add_point").innerHTML;
         const use_point = document.getElementById("use_point");
@@ -65,11 +69,11 @@
         });
 
         function isValue(value) {
-            if(value != null && value != '' && value != '0') {
-                const question = confirm(value+" 포인트를 사용하시겠습니까?");
+            if (value != null && value != '' && value != '0') {
+                const question = confirm(value + " 포인트를 사용하시겠습니까?");
 
                 // Would you like to your points? yes!
-                if(question == true)
+                if (question == true)
                     usedPoint(value)
 
             } else {
@@ -79,11 +83,11 @@
 
         // uesd point(DB 연동 필요. DB의 point 값을 total 값으로 업데이트 해야함)
         function usedPoint(value) {
-            console.log(value+"포인트를 사용합니다.");
+            console.log(value + "포인트를 사용합니다.");
 
             const total = parseInt(total_point) - value;
 
-            alert(total+" 누적 포인트 입니다.");
+            alert(total + " 누적 포인트 입니다.");
         }
 
         // add point(DB 연동 필요. DB의 point 값을 total 값으로 업데이트 해야함)
@@ -92,32 +96,33 @@
 
             const total = parseInt(total_point) + parseInt(add_point);
 
-            console.log(total+" 누적 포인트 입니다.");
+            console.log(total + " 누적 포인트 입니다.");
 
-            location.href="{% url 'Store' %}"
+            location.href = "{% url 'Store' %}"
 
             chatSocket.send(JSON.stringify({
                 'message': "init",
-                'change' : ""
+                'change': ""
             }));
         });
 
 
         // 통신스크립트
 
-        username='{{ username }}'
-        
+        username = '{{ username }}'
+
         var chatSocket = new WebSocket(
             'ws://' + window.location.host +
-            '/ws/test/'+username+'/');
-    
-    
+            '/ws/test/' + username + '/');
+
+
         document.querySelector("#useBtn").addEventListener("click", (e3) => {
             chatSocket.send(JSON.stringify({
                 'message': "Shisotry->Chistory",
-                'change' : use_point.value
+                'change': use_point.value
             }));
         });
     </script>
 </body>
+
 </html>

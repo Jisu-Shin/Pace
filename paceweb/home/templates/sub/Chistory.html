@@ -13,19 +13,9 @@
             'ws://' + window.location.host +
             '/ws/test/' + username + '/');
 
-        chatSocket.onmessage = function(e3) {      
-            console.log(e3)
-            var data = JSON.parse(e3.data);
-            var message = data['message'];
-            var change = data['change'];
-            if(message == "init")
-            location.href="{% url 'Custom' %}"
-            else document.getElementById('use_point').value = change
-        };
-
-        document.addEventListener("DOMContentLoaded", (e2) => {
+        document.addEventListener("DOMContentLoaded", (e) => {
             console.log("history->store")
-            chatSocket.onopen = function(e2){
+            chatSocket.onopen = function(e){
                 chatSocket.send(JSON.stringify({
                 'message': "complete",
                 'change': ' '
@@ -77,6 +67,7 @@
     </div>
 
 
+    <script type="text/javascript" src="{% static 'paceweb/js/history.js' %}"></script>
 </body>
 
 </html>
