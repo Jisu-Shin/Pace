@@ -149,11 +149,11 @@ class Store(TemplateView):
 
         return HttpResponse('')
 
-
+# 계산원이 보는 화면의 동작 
 class Shistory(TemplateView):    
     template_name = "sub/Shistory.html"
     
-
+    # 사용자 이름과 적립 또는 사용할 포인트를 화면에서 가져옴
     def get_context_data(self, **kwargs):
         context = super(TemplateView, self).get_context_data()
         print("shistory user",self.request.user.username)
@@ -167,6 +167,7 @@ class Shistory(TemplateView):
 
     def post(self, request, **kwargs):
         if request.method != 'POST':
+            # 데이터 검사 및 확인
             ins=models.Alarm()
             data_unicode=request.body.decode('utf-8')
             data=json.loads(data_unicode)
@@ -174,6 +175,7 @@ class Shistory(TemplateView):
             ins.save()
             return HttpResponse('')
         else:
+            # 누적 포인트 저장
             point = request.POST['message']
             name = get_name()
             customerInfo = UserInfo.objects.get(user_id=name)
