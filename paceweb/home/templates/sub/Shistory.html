@@ -92,7 +92,7 @@
             }
         }
 
-        // add point(DB 연동 필요. DB의 point 값을 total 값으로 업데이트 해야함)
+        // add point(DB 연동 필요. DB의 point 값을 total 값으로 업데이트)
         document.getElementById("addBtn").addEventListener('click', (e3) => {
             console.log("포인트를 적립합니다.");
 
@@ -108,7 +108,7 @@
             }));
         });
 
-        // DB에 포인트 저장 위해 view 파일로 계산된 point 값을 내보냄
+        // DB에 포인트 저장 위해 view.py 파일로 계산된 point 값을 내보냄
         function postPoint(point) {
             $.ajax({
                 method: "POST",
